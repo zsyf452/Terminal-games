@@ -15,3 +15,10 @@ void Goal::setActivation() const
         Goal::goalsRemaining--;
     }
 }
+
+std::string Goal::get_GoalsRemainingStr()
+{
+    std::ostringstream oss;
+    oss << std::setw(2) << std::setfill('0') << get_GoalsRemaining(); // 注意函数名是否有拼写错误
+    return oss.str();
+}

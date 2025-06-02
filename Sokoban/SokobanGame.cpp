@@ -70,8 +70,8 @@ void SokobanGame::updateRendering()
     // }
     //
     // terminalFrame->flip();
+    this->game_ui->drawStatusPanel(this->FPS);
     this->game_ui->drawEntities();
-
 
 }
 
@@ -148,6 +148,10 @@ void SokobanGame::gameLoop()
 {
     this->initBackground();
 
+    int frameCount = 0;
+    int currentFPS = 0;
+    auto lastFpsTime = std::chrono::steady_clock::now();
+
     while (true)
     {
         auto frameStart = std::chrono::steady_clock::now();
@@ -158,8 +162,25 @@ void SokobanGame::gameLoop()
         // 渲染
         this->updateRendering();
 
-        if (Goal::get_GolsRemaining() == 0)
+        if (Goal::get_GoalsRemaining() == 0)
             return;
+
+
+        // 统计 FPS
+        frameCount++;
+        auto now = std::chrono::steady_clock::now();
+        if (now - lastFpsTime >= std::chrono::seconds(1))
+        {
+            currentFPS = frameCount;
+            frameCount = 0;
+            lastFpsTime = now;
+
+            // 输出当前 FPS（可视化或传给 UI）
+            // std::cout << "FPS: " << currentFPS << std::endl;
+            this->FPS = currentFPS;
+            // 或者传给 GameUI::setFPS(currentFPS);
+        }
+
 
         // 计算帧间隔并休眠
         auto frameEnd = std::chrono::steady_clock::now();

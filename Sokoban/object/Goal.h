@@ -10,6 +10,9 @@
 #include "ICON.h"
 #include <string>
 #include <iostream>
+#include <sstream>
+#include <iomanip>
+
 #include "Entity.h"
 class Goal final :public Entity
 {
@@ -28,7 +31,8 @@ public:
     bool isActivation()const { return is_activation; }
     void setActivation() const;
 
-    static unsigned int get_GolsRemaining() {return goalsRemaining;};
+    static unsigned int get_GoalsRemaining() {return goalsRemaining;};
+    static std::string get_GoalsRemainingStr();
 };
 
 
