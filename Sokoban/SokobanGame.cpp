@@ -13,8 +13,8 @@ SokobanGame::SokobanGame(const GameInf &_gameInf)
     this->mapSize = (new MapSize(this->map->size(),this->map[0][0].size()));
     // this->box = new Box(boxPos);
     int tall = this->map->size();
-    this->terminalFrame = new TerminalFrame(tall);
-
+    // this->terminalFrame = new TerminalFrame();
+    this->game_ui = new GameUi(this->map);
     size_t boxsCount = _gameInf.boxsPos.size();
     for(size_t i = 0; i < boxsCount; i++)
     {
@@ -38,7 +38,8 @@ SokobanGame::SokobanGame(const GameInf &_gameInf)
 
 SokobanGame::~SokobanGame()
 {
-    delete this->terminalFrame;
+    // delete this->terminalFrame;
+    delete this->game_ui;
     delete this->player;
     for(Box  *box : this->boxs)
         delete box;
@@ -51,24 +52,25 @@ SokobanGame::~SokobanGame()
 
 void SokobanGame::updateRendering()
 {
-    // 先清理上次绘制的动态实体旧位置
-    for (const Entity* entity : Entity::get_registry())
-    {
-        Position lastPos = entity->get_last_position();
-        // 这里要用背景地图字符或者目标图标覆盖旧位置
-        char bgChar = (*map)[lastPos.get_x()][lastPos.get_y()];
-        terminalFrame->writeXY(lastPos.get_x(), lastPos.get_y(), std::string(1, bgChar));
-    }
-
-    // 再绘制所有实体当前位置
-    for (const Entity* entity : Entity::get_registry())
-    {
-        Position curPos = entity->get_position();
-        terminalFrame->writeXY(curPos.get_x(), curPos.get_y(), std::string(1,entity->get_icon()));
-        entity->storeCurrentPosition();  // 更新last_position = current_position
-    }
-
-    terminalFrame->flip();
+    // // 先清理上次绘制的动态实体旧位置
+    // for (const Entity* entity : Entity::get_registry())
+    // {
+    //     Position lastPos = entity->get_last_position();
+    //     // 这里要用背景地图字符或者目标图标覆盖旧位置
+    //     char bgChar = (*map)[lastPos.get_x()][lastPos.get_y()];
+    //     terminalFrame->writeXY(lastPos.get_x(), lastPos.get_y(), std::string(1, bgChar));
+    // }
+    //
+    // // 再绘制所有实体当前位置
+    // for (const Entity* entity : Entity::get_registry())
+    // {
+    //     Position curPos = entity->get_position();
+    //     terminalFrame->writeXY(curPos.get_x(), curPos.get_y(), std::string(1,entity->get_icon()));
+    //     entity->storeCurrentPosition();  // 更新last_position = current_position
+    // }
+    //
+    // terminalFrame->flip();
+    this->game_ui->drawEntities();
 
 
 }
@@ -76,19 +78,17 @@ void SokobanGame::updateRendering()
 
 void SokobanGame::initBackground()
 {
-    for (const Goal * goal : this->goals)
-    {
-        (*map)[goal->get_position().get_x()][goal->get_position().get_y()] = goal->get_icon();
-    }
 
-    int n = this->mapSize->get_x();
-    int m = this->mapSize->get_y();
-    for (int i = 0; i < n; i++)
-    {
-        std::string &t = this->map->at(i);
-        terminalFrame->write(i,t);
-    }
-    terminalFrame->flip();
+
+    // int n = this->mapSize->get_x();
+    // int m = this->mapSize->get_y();
+    // for (int i = 0; i < n; i++)
+    // {
+    //     std::string &t = this->map->at(i);
+    //     terminalFrame->write(i,t);
+    // }
+    // terminalFrame->flip();
+    this->game_ui->drawBackground();
 }
 
 void SokobanGame::updateGame()
@@ -208,7 +208,8 @@ bool SokobanGame::boxMove(const int &direction,Box *_box)
         this->positionTracker->setMark(LAYER_DYNAMIC,_box->get_position().get_x(),_box->get_position().get_y(),MarkType::NONE);
         this->positionTracker->setObject(LAYER_DYNAMIC,_box->get_position().get_x(),_box->get_position().get_y(),nullptr);
         //修改输出缓冲区
-        this->terminalFrame->writeXY(_box->get_position().get_x(),_box->get_position().get_y(),std::string(1,' '));
+        // this->terminalFrame->writeXY(_box->get_position().get_x(),_box->get_position().get_y(),std::string(1,' '));
+        this->game_ui->clearPosition(_box->get_position());
         bool is = this->deleteBox(_box);
 
         //更改终点那层的标记

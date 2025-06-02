@@ -24,7 +24,7 @@ private:
     void clearEndLine();
     void positioningCursor(int y ,int x = 1);
 public:
-    TerminalFrame(size_t lines);
+    TerminalFrame();
     ~TerminalFrame();
 
     void clearScreen();

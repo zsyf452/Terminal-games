@@ -10,12 +10,13 @@
 #include <chrono>
 #include <thread>
 #include <vector>
-#include "TerminalFrame.h"
+#include "ui/TerminalFrame.h"
 #include "object/player.h"
 #include "object/Box.h"
 #include "object/Goal.h"
 #include "PositionTracker.h"
 #include "object/ICON.h"
+#include "ui/GameUi.h"
 
 
 // 方向键宏定义（扩展键码）
@@ -32,7 +33,8 @@ class SokobanGame
 private:
     static constexpr int FRAME_TIME_MS = 16; // 16 毫秒，约等于 60 FPS
     //终端
-    TerminalFrame* terminalFrame;
+    // TerminalFrame* terminalFrame;
+    GameUi *game_ui;
     //地图
     MapData* map;
     MapSize *mapSize;

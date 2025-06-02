@@ -7,8 +7,8 @@ add_executable(Sokoban main.cpp
         SokobanGame.cpp
         SokobanGame.h
 
-        TerminalFrame.cpp
-        TerminalFrame.h
+        ui/TerminalFrame.cpp
+        ui/TerminalFrame.h
         object/player.cpp
         object/player.h
         point.cpp

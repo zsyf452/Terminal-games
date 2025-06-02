@@ -49,9 +49,9 @@ void TerminalFrame::clearScreen()
     std::cout.flush();
 }
 
-TerminalFrame::TerminalFrame(size_t lines)
+TerminalFrame::TerminalFrame()
 {
-    this->lines = lines;
+    this->lines = 1;
     this->front.resize(lines);
     this->back.resize(lines);
 
@@ -65,37 +65,43 @@ TerminalFrame::~TerminalFrame()
     this->showCursor();
 }
 
-void TerminalFrame::write(size_t line ,const std::string &s)
+void TerminalFrame::write(size_t line, const std::string &s)
 {
-
-    if (line < lines)
+    if (line >= lines)
     {
-        this->back[line] = s;
-        return;
+        // 自动扩展行数并初始化为空行
+        back.resize(line + 1, "");
+        front.resize(line + 1, "");
+        lines = line + 1;
     }
 
-    throw "error: Out of range";
+    back[line] = s;
 }
 
 
-void TerminalFrame::writeXY(size_t y,size_t x ,const std::string &s)
+void TerminalFrame::writeXY(size_t y, size_t x, const std::string &s)
 {
     if (y >= lines)
-        throw "error: Out of range";
+    {
+        // 自动扩展行数
+        back.resize(y + 1, "");
+        front.resize(y + 1, "");
+        lines = y + 1;
+    }
 
-    std::string& line = back[y];
+    std::string &line = back[y];
     const size_t required_length = x + s.length();
 
-    // 扩展行并填充空格
     if (line.length() < required_length)
     {
         line.resize(required_length, ' ');
     }
 
+    // 安全写入
     line.replace(
-        std::min(x, line.length()),
+        x,
         s.length(),
-        s.substr(0, line.length() - x)
+        s
     );
 }
 
