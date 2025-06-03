@@ -31,7 +31,7 @@
 class SokobanGame
 {
 private:
-    static constexpr int FRAME_TIME_MS = 16; // 16 毫秒，约等于 60 FPS
+    static constexpr int FRAME_TIME_MS = 8; // 16 毫秒，约等于 60 FPS
     int FPS = 0;//游戏帧数
     //终端
     // TerminalFrame* terminalFrame;

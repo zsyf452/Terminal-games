@@ -103,17 +103,19 @@ void GameUi::drawLegend(int offsetX, int offsetY)
 }
 
 
-void GameUi::drawStatusPanel(int fps,int offsetX, int offsetY)
+void GameUi::drawStatusPanel(int fps,unsigned int playerStepCount,int offsetX, int offsetY)
 {
     // === 填入你计算好的数据 ===
-    std::string timeStr = this->getTime();        // ← 在外部赋值，如 "01:45"
-    std::string goalsStr = Goal::get_GoalsRemainingStr();       // ← 在外部赋值，如 "03"
+    std::string timeStr = this->getTime();
+    std::string goalsStr = Goal::get_GoalsRemainingStr();
+    std::string playerStepCountStr = this->intToStringZeroPadded(playerStepCount,5);
     std::string fpsStr = this->intToStringZeroPadded(fps,2);
 
     std::vector<std::string> lines = {
         "+-----------------+",
         "| TIME   " + timeStr + " |",
         "| GOALS        " + goalsStr + " |",
+        "| STEP      " + playerStepCountStr + " |",
         "| FPS          " + fpsStr + " |",
         "+-----------------+"
     };

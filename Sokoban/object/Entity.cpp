@@ -26,6 +26,12 @@ Entity::Entity(const Entity &movable)
 }
 
 
+void Entity::move(int dx, int dy)
+{
+    current_position->set_x(current_position->get_x() + dx);
+    current_position->set_y(current_position->get_y() + dy);
+}
+
 Entity &Entity::operator=(const Entity &movable)
 {
     if (&movable == this) return *this;

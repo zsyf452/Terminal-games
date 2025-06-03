@@ -45,9 +45,9 @@ public:
     void drawEntities();
 
     //左
-    void drawLegend(int offsetX = 10, int offsetY = 1);
+    void drawLegend(int offsetX = 10, int offsetY = 0);
     //右边
-    void drawStatusPanel(int fps, int offsetX = 0, int offsetY = 0);
+    void drawStatusPanel(int fps,unsigned int playerStepCount,int offsetX = 0, int offsetY = 0);
 
 
 

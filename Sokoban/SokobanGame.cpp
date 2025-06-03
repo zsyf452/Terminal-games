@@ -70,7 +70,7 @@ void SokobanGame::updateRendering()
     // }
     //
     // terminalFrame->flip();
-    this->game_ui->drawStatusPanel(this->FPS);
+    this->game_ui->drawStatusPanel(this->FPS,this->player->getMoveCount());
     this->game_ui->drawEntities();
 
 }
@@ -238,6 +238,7 @@ bool SokobanGame::boxMove(const int &direction,Box *_box)
         const Goal *goal =dynamic_cast<Goal*>(this->positionTracker->getObject(LAYER_OBJECT,temp_box.get_position().get_x(),temp_box.get_position().get_y()));
         goal->setActivation();
 
+        return true;
 
         // this->updateRendering();
     }

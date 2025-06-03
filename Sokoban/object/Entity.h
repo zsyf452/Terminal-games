@@ -22,6 +22,9 @@ private:
     Position *last_position;
     static std::vector<Entity*> registry;  // 所有实体对象记录
 
+
+protected:
+    virtual void move(int dx, int dy);
 public:
     Entity():icon(new char(' ')),current_position(new Position()),last_position(new Position()){registry.push_back(this);};
 
@@ -49,10 +52,11 @@ public:
     void storeCurrentPosition() const {*this->last_position = *this->current_position;};
     void storeLastPosition() const {*this->current_position = *this->last_position;};
 
-    void right_move() const {this->current_position->set_y(current_position->get_y()+1);};
-    void left_move() const {this->current_position->set_y(current_position->get_y()-1);};
-    void up_move() const {this->current_position->set_x(current_position->get_x()-1);};
-    void down_move() const {this->current_position->set_x(current_position->get_x()+1);};
+
+    void right_move() { move(0, 1); }  // 向右移动
+    void left_move() { move(0, -1); }  // 向左移动
+    void up_move() { move(-1, 0); }    // 向上移动
+    void down_move() { move(1, 0); }   // 向下移动
 public:
     Entity &operator=(const Entity &movable);
 };
