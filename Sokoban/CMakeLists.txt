@@ -24,4 +24,8 @@ add_executable(Sokoban main.cpp
         PositionTracker.cpp
         PositionTracker.h
         ui/GameUi.cpp
-        ui/GameUi.h)
+        ui/GameUi.h
+        ui/Menu/Menu.cpp
+        ui/Menu/Menu.h
+        ui/Menu/MenuItem.cpp
+        ui/Menu/MenuItem.h)
