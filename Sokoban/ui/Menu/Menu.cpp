@@ -14,13 +14,31 @@ Menu::~Menu()
     items.clear();
 }
 
+
+bool Menu::removeItem(const int index)
+{
+    if (index >= this->items.size() || this->items.empty())
+        return false;
+
+    this->items.erase(this->items.begin() + index);
+    return true;
+}
+
 void Menu::move(int direction)
 {
     int t = currentIndex;
-    t += direction;
+    t =  t + direction;
 
-    if (t < 0 || t >= items.size())
+    if (t < 0)
+    {
+        this->currentIndex = this->items.size() - 1;
         return;
+    }
+    else if (t > this->items.size() - 1)
+    {
+        this->currentIndex = 0;
+        return;
+    }
 
     this->currentIndex = t;
 }

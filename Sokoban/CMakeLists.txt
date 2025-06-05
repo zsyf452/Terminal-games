@@ -28,4 +28,6 @@ add_executable(Sokoban main.cpp
         ui/Menu/Menu.cpp
         ui/Menu/Menu.h
         ui/Menu/MenuItem.cpp
-        ui/Menu/MenuItem.h)
+        ui/Menu/MenuItem.h
+        ui/Menu/MenuManager.cpp
+        ui/Menu/MenuManager.h)
