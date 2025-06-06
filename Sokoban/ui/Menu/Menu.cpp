@@ -15,6 +15,24 @@ Menu::~Menu()
 }
 
 
+const Menu *Menu::onMenuConfirm() const
+{
+    const Menu *next_menu = nullptr;
+    const auto currMenuItem = this->getItem(this->getCurrentIndex());
+
+    if (!currMenuItem->is_action())
+    {
+        currMenuItem->execute();
+    }
+
+    if (!currMenuItem->is_nextMenu())
+    {
+        next_menu = currMenuItem->get_nextMenu();
+    }
+    return next_menu;
+}
+
+
 bool Menu::removeItem(const int index)
 {
     if (index >= this->items.size() || this->items.empty())

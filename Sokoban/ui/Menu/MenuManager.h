@@ -6,8 +6,10 @@
 #define MENUMANAGER_H
 
 #include <stack>
+#include <conio.h>
 #include "Menu.h"
 #include "../TerminalFrame.h"
+#include "../../KeyBoard.h"
 
 #define SELECTED_ICON ">"
 #define CURSOR_FIXED_X 1
@@ -24,10 +26,13 @@ public:
     MenuManager(TerminalFrame* frame): frame(frame){};
     ~MenuManager();
 
+    void run();
+
     void renderMenuItems();
     void renderCursor();
+    void clearCursor() const;
 
-    void pushMenu(Menu* menu);
+    void pushMenu(const Menu *menu);
     void popMenu();
 
     [[nodiscard]] Menu *getCurrenMenu() const{return menuStack.top();};

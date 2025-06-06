@@ -43,6 +43,15 @@ void TerminalFrame::positioningCursor(int y ,int x)
     std::cout << "\033[" << y << ";"<<x<<"H";
 }
 
+
+void TerminalFrame::clearBuffer()
+{
+    for (auto &b : this->back)
+    {
+        b = "";
+    }
+}
+
 void TerminalFrame::clearScreen()
 {
     std::cout << "\033[2J\033[H";

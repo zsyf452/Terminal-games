@@ -27,6 +27,7 @@ public:
     TerminalFrame();
     ~TerminalFrame();
 
+    void clearBuffer();
     void clearScreen();
     void write(size_t line ,const std::string &s);
     void writeXY(size_t y,size_t x ,const std::string &s);

@@ -5,6 +5,7 @@
 #include "ui/Menu/Menu.h"
 #include "ui/Menu/MenuItem.h"
 
+
 int main()
 {
     // MapData map =
@@ -45,12 +46,28 @@ int main()
 
 
     TerminalFrame tf;
+    MenuManager *manager = new MenuManager(&tf);
+    // 二级
+    MenuItem *it21 = new MenuItem("菜单四",[]() {
+        std::cout<<"hello world"<<std::endl;
+    });
+    MenuItem *it22 = new MenuItem("菜单五");
+    MenuItem *it23 = new MenuItem("返回",[&manager](){manager->popMenu();});
+    Menu *menu2 = new Menu();
 
-    MenuItem *it1 = new MenuItem("菜单一");
-    MenuItem *it2 = new MenuItem("菜单二");
+    menu2->addItem(it21);
+    menu2->addItem(it22);
+    menu2->addItem(it23);
+
+
+    // 一级
+    MenuItem *it1 = new MenuItem("菜单一",[]() {
+        std::cout<<"hello world"<<std::endl;
+    });
+    MenuItem *it2 = new MenuItem("菜单二",menu2);
     MenuItem *it3 = new MenuItem("菜单三");
     Menu *menu = new Menu();
-    MenuManager *manager = new MenuManager(&tf);
+
 
     menu->addItem(it1);
     menu->addItem(it2);
@@ -60,26 +77,12 @@ int main()
     manager->renderMenuItems();
 
 
-
+    // menu->getItem(1)->
     // manager->getCurrenMenu()->moveUp();
     // manager->renderCursor();
 
-    while (true)
-    {
-        int t = _getch();
-        switch (t)
-        {
-            case KEY_UP:
-                manager->getCurrenMenu()->moveUp();
-                break;
-            case KEY_DOWN:
-                manager->getCurrenMenu()->moveDown();
-                break;
-        }
-        manager->renderCursor();
-    }
+    manager->run();
 
     int t = _getch();
-    system("pause");
     return 0;
 }

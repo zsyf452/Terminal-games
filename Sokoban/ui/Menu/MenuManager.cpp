@@ -17,6 +17,44 @@ MenuManager::~MenuManager()
 }
 
 
+void MenuManager::run()
+{
+
+    while (true)
+    {
+        int t = _getch();
+        switch (t)
+        {
+            case KEY_UP:
+                this->getCurrenMenu()->moveUp();
+                break;
+            case KEY_DOWN:
+                this->getCurrenMenu()->moveDown();
+                break;
+            case KEY_CONFIRM:
+            {
+                const Menu *next_menu = this->getCurrenMenu()->onMenuConfirm();
+                if (next_menu != nullptr)
+                {
+                    //清空鼠标
+                    this->clearCursor();
+                    //压入子级菜单
+                    this->pushMenu(next_menu);
+                    //重置索引
+                    this->getCurrenMenu()->reset();
+                    //清空缓冲区
+                    // this->frame->clearBuffer();
+                    //渲染
+                    this->renderMenuItems();
+                }
+                break;
+            }
+
+        }
+        this->renderCursor();
+    }}
+
+
 void MenuManager::renderMenuItems()
 {
     auto items =  this->menuStack.top()->getItems();
@@ -43,19 +81,29 @@ void MenuManager::renderCursor()
     this->frame->flip();
 }
 
-void MenuManager::pushMenu(Menu* menu)
+
+void MenuManager::clearCursor() const
+{
+    const int curr = this->getCurrenMenu()->getCurrentIndex();
+    this->frame->writeXY(curr,CURSOR_FIXED_X," ");
+    this->getCurrenMenu()->syncLastIndex();
+    this->frame->flip();
+}
+
+void MenuManager::pushMenu(const Menu *menu)
 {
     if (menu == nullptr)
         return;
-    menu->reset();
-    menuStack.push(menu);
+    menuStack.push(const_cast<std::stack<Menu *>::value_type>(menu));
 }
 
 void MenuManager::popMenu()
 {
+    this->clearCursor();
     if (menuStack.empty())
         return;
     const Menu* menu = menuStack.top();
     menuStack.pop();
+    this->renderMenuItems();
     // delete menu;
 }

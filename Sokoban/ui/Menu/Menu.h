@@ -20,6 +20,8 @@ public:
     Menu():currentIndex(0),lastIndex(0){};
     ~Menu();
 
+    const Menu *onMenuConfirm() const;
+
     size_t size() const{return items.size();}
 
     void reset() {this->currentIndex = 0;};
