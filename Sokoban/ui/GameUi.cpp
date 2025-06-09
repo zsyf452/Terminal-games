@@ -7,6 +7,7 @@
 
 GameUi::GameUi(const MapData *map):terminalFrame(new TerminalFrame),mapData(map)
 {
+    this->terminalFrame->clearBuffer();
     this->startTimer();
 }
 
@@ -16,6 +17,8 @@ GameUi::~GameUi()
     delete terminalFrame;
     terminalFrame = nullptr;
 }
+
+
 
 void GameUi::clearPosition(const Position &pos)
 {

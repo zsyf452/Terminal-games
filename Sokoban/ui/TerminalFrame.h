@@ -27,6 +27,9 @@ public:
     TerminalFrame();
     ~TerminalFrame();
 
+    void getBackSize(size_t& x, size_t& y) const{x = back.size(); y = back[0].size(); };
+
+    void normalizeBackWidth();
     void clearBuffer();
     void clearScreen();
     void write(size_t line ,const std::string &s);

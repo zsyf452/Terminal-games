@@ -31,13 +31,13 @@ private:
     //计时器
     std::string formatTime(int seconds);
     void startTimer();
-    std::string getTime();
     //整型转字符串(补零
     std::string intToStringZeroPadded(int number, int width);
 public:
     GameUi(const MapData *map);
     ~GameUi();
 
+     std::string getTime();
     void clearPosition(const Position &pos);
     void drawCharAt(const Position &pos, char ch);
 
@@ -50,7 +50,8 @@ public:
     void drawStatusPanel(int fps,unsigned int playerStepCount,int offsetX = 0, int offsetY = 0);
 
 
-
+    //清屏
+    void clearScreen() const {this->terminalFrame->clearScreen();};
 };
 
 

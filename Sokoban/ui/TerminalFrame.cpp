@@ -44,6 +44,31 @@ void TerminalFrame::positioningCursor(int y ,int x)
 }
 
 
+
+void TerminalFrame::normalizeBackWidth()
+{
+    size_t maxLength = back[0].length();
+
+    // 找到最长的行
+    for (const auto& row : this->back)
+    {
+        maxLength = std::max(maxLength, row.length());
+    }
+
+    // if (maxLength > back[0].length())
+        // return;
+
+    // 填充较短的行
+    for (auto& row : this->back)
+    {
+        while (row.length() < maxLength)
+        {
+            row += " ";
+        }
+    }
+}
+
+
 void TerminalFrame::clearBuffer()
 {
     for (auto &b : this->back)
@@ -71,7 +96,7 @@ TerminalFrame::TerminalFrame()
 
 TerminalFrame::~TerminalFrame()
 {
-    this->showCursor();
+    // this->showCursor();
 }
 
 void TerminalFrame::write(size_t line, const std::string &s)

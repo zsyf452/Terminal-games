@@ -4,6 +4,7 @@
 #include "ui/Menu/MenuManager.h"
 #include "ui/Menu/Menu.h"
 #include "ui/Menu/MenuItem.h"
+#include "ui/Menu/MenuMapItem.h"
 
 
 int main()
@@ -48,38 +49,28 @@ int main()
     TerminalFrame tf;
     MenuManager *manager = new MenuManager(&tf);
     // 二级
-    MenuItem *it21 = new MenuItem("菜单四",[]() {
-        std::cout<<"hello world"<<std::endl;
-    });
-    MenuItem *it22 = new MenuItem("菜单五");
-    MenuItem *it23 = new MenuItem("返回",[&manager](){manager->popMenu();});
-    Menu *menu2 = new Menu();
-
-    menu2->addItem(it21);
-    menu2->addItem(it22);
-    menu2->addItem(it23);
-
+    std::vector<MenuMapItem*> menuMapItems = MenuMapItem::loadMapMenuFromJson();
+    Menu *menuMap = new Menu();
+    for (MenuItem *item : menuMapItems)
+    {
+        menuMap->addItem(item);
+    }
+    menuMap->addItem(new MenuItem("back",[&manager](){manager->popMenu();}));
 
     // 一级
-    MenuItem *it1 = new MenuItem("菜单一",[]() {
-        std::cout<<"hello world"<<std::endl;
-    });
-    MenuItem *it2 = new MenuItem("菜单二",menu2);
-    MenuItem *it3 = new MenuItem("菜单三");
+    MenuItem *startGame = new MenuItem("开始游戏",menuMap);
+
+    MenuItem *exitGame = new MenuItem("退出游戏",[](){exit(0);});
     Menu *menu = new Menu();
 
 
-    menu->addItem(it1);
-    menu->addItem(it2);
-    menu->addItem(it3);
+    menu->addItem(startGame);
+    menu->addItem(exitGame);
     manager->pushMenu(menu);
 
     manager->renderMenuItems();
 
 
-    // menu->getItem(1)->
-    // manager->getCurrenMenu()->moveUp();
-    // manager->renderCursor();
 
     manager->run();
 

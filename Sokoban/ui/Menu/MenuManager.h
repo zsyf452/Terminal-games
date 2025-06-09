@@ -23,7 +23,7 @@ private:
 
 public:
     MenuManager(): frame(nullptr){};
-    MenuManager(TerminalFrame* frame): frame(frame){};
+    explicit MenuManager(TerminalFrame* frame): frame(frame){};
     ~MenuManager();
 
     void run();

@@ -8,6 +8,7 @@
 #include <conio.h>
 #include <windows.h>
 #include <chrono>
+#include <iomanip>
 #include <thread>
 #include <vector>
 #include "ui/TerminalFrame.h"
@@ -45,6 +46,9 @@ private:
     std::vector<Goal*> goals;
 
 private:
+    //获取当前日期
+    std::string getCurrentDate();
+
     //游戏渲染更新
     void updateRendering();
     void initBackground();
@@ -55,7 +59,6 @@ private:
     //异步键盘输入
     int asynKeyboardEntry();
     //游戏帧刷新
-    void gameLoop();
     bool boxMove(const int &direction,Box *_box);
     bool checkBoxCollision(const Position &pos);
     //判断本次移动是否合法
@@ -66,6 +69,8 @@ public:
     SokobanGame(const GameInf &_gameInf);
 
     ~SokobanGame();
+
+    bool gameLoop(GameHistory &gh);
 };
 
 

@@ -15,6 +15,7 @@
 
 // #include "SokobanGame.h"
 #include "object/ICON.h"
+#include "GameData.h"
 // #define LAYER_FLOOR     0
 // #define LAYER_OBJECT    1
 // #define LAYER_DYNAMIC
@@ -38,23 +39,7 @@ enum MarkType {
 };
 
 
-typedef std::vector<std::string> MapData;
-// typedef std::vector<std::vector<MarkType> > MarkMapData;
 
-struct GameInf
-{
-    MapData map;
-    Position playerPos;
-    std::vector<Position> boxsPos;
-    std::vector<Position> goalsPos;
-};
-
-struct GameObjectsRef
-{
-    Player* playerInstance;
-    std::vector<Box*> *boxsInstance;
-    std::vector<Goal*> *goalsInstance;
-};
 
 class MarkObject
 {

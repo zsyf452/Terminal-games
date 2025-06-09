@@ -33,7 +33,8 @@ SokobanGame::SokobanGame(const GameInf &_gameInf)
     // 初始化标记器
     GameObjectsRef gameObjectsRes = {this->player,&this->boxs,&this->goals};
     this->positionTracker = new PositionTracker(_gameInf,gameObjectsRes);
-    this->gameLoop();
+
+    // this->gameLoop();
 }
 
 SokobanGame::~SokobanGame()
@@ -49,6 +50,23 @@ SokobanGame::~SokobanGame()
     delete mapSize;
 }
 
+
+
+std::string SokobanGame::getCurrentDate()
+{
+    std::time_t t = std::time(nullptr);
+    std::tm* now = std::localtime(&t);
+
+    std::ostringstream dateStream;
+    dateStream << std::setw(4) << (now->tm_year + 1900) << "-"
+               << std::setw(2) << std::setfill('0') << (now->tm_mon + 1) << "-"
+               << std::setw(2) << std::setfill('0') << now->tm_mday << " "
+               << std::setw(2) << std::setfill('0') << now->tm_hour << ":"
+               << std::setw(2) << std::setfill('0') << now->tm_min << ":"
+               << std::setw(2) << std::setfill('0') << now->tm_sec;
+
+    return dateStream.str();
+}
 
 void SokobanGame::updateRendering()
 {
@@ -143,8 +161,7 @@ int SokobanGame::asynKeyboardEntry()
 }
 
 
-
-void SokobanGame::gameLoop()
+bool SokobanGame::gameLoop(GameHistory &gh)
 {
     this->initBackground();
 
@@ -163,7 +180,7 @@ void SokobanGame::gameLoop()
         this->updateRendering();
 
         if (Goal::get_GoalsRemaining() == 0)
-            return;
+            break;
 
 
         // 统计 FPS
@@ -187,6 +204,11 @@ void SokobanGame::gameLoop()
         auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(frameEnd - frameStart);
         std::this_thread::sleep_for(std::chrono::milliseconds(FRAME_TIME_MS) - elapsedTime);
     }
+
+
+    gh = {this->player->getMoveCount(),this->game_ui->getTime(),this->getCurrentDate()};
+    // this->game_ui->clearScreen();
+    return true;
 }
 
 

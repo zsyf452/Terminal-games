@@ -61,6 +61,7 @@ PositionTracker::PositionTracker(const GameInf &gameInf,const GameObjectsRef &ga
                     break;
                 case ROAD_ICON:
                     (*this->mapMask)[Layer::LAYER_FLOOR][i][j].setMark(MarkType::ROAD);
+                    break;
                default:
                     break;
             }

@@ -45,13 +45,21 @@ void MenuManager::run()
                     //清空缓冲区
                     // this->frame->clearBuffer();
                     //渲染
-                    this->renderMenuItems();
+
                 }
+                this->frame->clearScreen();
+                // this->renderMenuItems();
                 break;
             }
 
         }
+
+        // this->frame->clearBuffer();
+        // this->frame->clearScreen();
+        // this->frame->normalizeBackWidth();
+        this->getCurrenMenu()->getItem(this->getCurrenMenu()->getCurrentIndex())->onSelectedRender(frame,10,0);
         this->renderCursor();
+        this->renderMenuItems();
     }}
 
 
@@ -103,7 +111,10 @@ void MenuManager::popMenu()
     if (menuStack.empty())
         return;
     const Menu* menu = menuStack.top();
+
     menuStack.pop();
+    this->frame->clearScreen();
+    this->frame->clearBuffer();
     this->renderMenuItems();
     // delete menu;
 }

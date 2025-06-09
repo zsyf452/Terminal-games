@@ -1,12 +1,15 @@
 cmake_minimum_required(VERSION 3.31)
+
 project(Sokoban)
 
 set(CMAKE_CXX_STANDARD 20)
 
+
+find_package(jsoncpp CONFIG REQUIRED)
+
 add_executable(Sokoban main.cpp
         SokobanGame.cpp
         SokobanGame.h
-
         ui/TerminalFrame.cpp
         ui/TerminalFrame.h
         object/player.cpp
@@ -31,4 +34,9 @@ add_executable(Sokoban main.cpp
         ui/Menu/MenuItem.h
         ui/Menu/MenuManager.cpp
         ui/Menu/MenuManager.h
-        KeyBoard.h)
+        KeyBoard.h
+        ui/Menu/MenuMapItem.cpp
+        ui/Menu/MenuMapItem.h
+        GameData.h)
+
+target_link_libraries(Sokoban PRIVATE JsonCpp::JsonCpp)
