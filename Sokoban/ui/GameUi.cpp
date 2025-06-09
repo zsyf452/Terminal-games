@@ -14,6 +14,10 @@ GameUi::GameUi(const MapData *map):terminalFrame(new TerminalFrame),mapData(map)
 
 GameUi::~GameUi()
 {
+    // this->terminalFrame->clearBuffer();
+    this->clearScreen();
+    // this->terminalFrame->flip();
+
     delete terminalFrame;
     terminalFrame = nullptr;
 }
