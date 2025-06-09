@@ -45,9 +45,11 @@ void MenuManager::run()
                     //清空缓冲区
                     // this->frame->clearBuffer();
                     //渲染
-
+                    // this->renderMenuItems();
+                    break;
                 }
-                this->frame->clearScreen();
+                // this->frame->clearScreen();
+                // this->frame->clearBuffer();
                 // this->renderMenuItems();
                 break;
             }
@@ -57,9 +59,11 @@ void MenuManager::run()
         // this->frame->clearBuffer();
         // this->frame->clearScreen();
         // this->frame->normalizeBackWidth();
-        this->getCurrenMenu()->getItem(this->getCurrenMenu()->getCurrentIndex())->onSelectedRender(frame,10,0);
+        // this->frame->flip();
         this->renderCursor();
         this->renderMenuItems();
+        this->getCurrenMenu()->getItem(this->getCurrenMenu()->getCurrentIndex())->onSelectedRender(frame,10,0);
+        // this->frame->flip();
     }}
 
 

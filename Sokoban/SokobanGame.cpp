@@ -207,7 +207,7 @@ bool SokobanGame::gameLoop(GameHistory &gh)
 
 
     gh = {this->player->getMoveCount(),this->game_ui->getTime(),this->getCurrentDate()};
-    // this->game_ui->clearScreen();
+    this->game_ui->clearScreen();
     return true;
 }
 

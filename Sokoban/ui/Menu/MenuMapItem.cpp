@@ -75,7 +75,7 @@ void MenuMapItem::onSelectedRender(TerminalFrame* frame, const size_t offsetY, c
         frame->writeXY(infoX++, infoY, "通关日期： " + this->gameHistory->completionDate);
     }
 
-    // frame->flip();
+    frame->flip();
 }
 
 std::vector<MenuMapItem*> MenuMapItem::loadMapMenuFromJson()
